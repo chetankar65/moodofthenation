@@ -58,6 +58,16 @@ def load_user(user_id):
 def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
 
+################
+@app.route("/")
+def index():
+    if current_user.is_authenticated:
+        user = current_user.name
+        return render_template('dashboard.html', user = user)
+        #current_user.name, current_user.email, current_user.profile_pic
+    else:
+        return render_template('index.html')
+
 
 ### Login endppoint
 @app.route('/login')
@@ -75,27 +85,6 @@ def login():
     )
 
     return redirect(request_uri)
-
-#############
-@app.route("/")
-def index():
-    if current_user.is_authenticated:
-        '''
-        return (
-            "<p>Hello, {}! You're logged in! Email: {}</p>"
-            "<div><p>Google Profile Picture:</p>"
-            '<img src="{}" alt="Google profile pic"></img></div>'
-            '<a class="button" href="/logout">Logout</a>'.format(
-                current_user.name, current_user.email, current_user.profile_pic
-            )
-        )
-        '''
-
-        msg = current_user.name
-        return render_template('dashboard.html', msg = msg)
-        #current_user.name, current_user.email, current_user.profile_pic
-    else:
-        return render_template('index.html')
 
 
 ###Now make the dashboard
@@ -160,7 +149,7 @@ def logout():
     return redirect(url_for("index"))
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc")
+    app.run(ssl_context="adhoc",host='0.0.0.0')
     # This is done as a lot of google APIs do not work unless there is an SSL certificate.
     # The pythonSSL module creates an SSL certificate on the fly. There will be a warning
     # as the certificate is not verified or register, but we can advance.It's fine
