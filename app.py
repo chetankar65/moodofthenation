@@ -1,6 +1,10 @@
 import json
 import os
 import sqlite3
+from newsapi import NewsApiClient
+
+newsapi = NewsApiClient(api_key='cf454be3d2784854a6d0c0e3b6363c29')
+
 
 # Third-party libraries
 from flask import Flask, redirect, request, url_for, render_template
@@ -20,8 +24,11 @@ from user import User
 
 # Configuration
 ### Set environment variables for GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,GOOGLE_DISCOVERY_URL
-GOOGLE_CLIENT_ID = '511245001518-u0sur2p1u9c63b7uia2aiis0nklh6nan.apps.googleusercontent.com'
-GOOGLE_CLIENT_SECRET = 'QdIgendaEwfcvPHTB4mKyypE'
+
+#. ~/.bashrc - Run before starting server
+
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 GOOGLE_DISCOVERY_URL = (
     "https://accounts.google.com/.well-known/openid-configuration"
 )
@@ -148,9 +155,21 @@ def logout():
     logout_user()
     return redirect(url_for("index"))
 
+@app.route('/news')
+def news():
+    top_headlines = newsapi.get_top_headlines(q='bitcoin',category='business',language='en',country='us')
+
+    sources = newsapi.get_sources()
+
+    print(top_headlines["articles"])
+    for article in top_headlines["articles"]:
+        print(article[0]["author"],article[0]["title"],article[0]["description"])
+    return "Hi"
+
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc",host='0.0.0.0')
+    app.run(ssl_context="adhoc")
     # This is done as a lot of google APIs do not work unless there is an SSL certificate.
     # The pythonSSL module creates an SSL certificate on the fly. There will be a warning
-    # as the certificate is not verified or register, but we can advance.It's fine
+    # as the certificate is not verified, but we can advance.It's fine
 
+#news api: cf454be3d2784854a6d0c0e3b6363c29
