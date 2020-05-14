@@ -3,9 +3,6 @@ import os
 import sqlite3
 from newsapi import NewsApiClient
 
-newsapi = NewsApiClient(api_key='cf454be3d2784854a6d0c0e3b6363c29')
-
-
 # Third-party libraries
 from flask import Flask, redirect, request, url_for, render_template
 from flask_login import (
