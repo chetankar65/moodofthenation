@@ -1,7 +1,6 @@
 import json
 import os
 import sqlite3
-from newsapi import NewsApiClient
 
 # Third-party libraries
 from flask import Flask, redirect, request, url_for, render_template
@@ -151,7 +150,7 @@ def callback():
 def logout():
     logout_user()
     return redirect(url_for("index"))
-
+'''
 @app.route('/news')
 def news():
     top_headlines = newsapi.get_top_headlines(q='bitcoin',category='business',language='en',country='us')
@@ -162,6 +161,7 @@ def news():
     for article in top_headlines["articles"]:
         print(article[0]["author"],article[0]["title"],article[0]["description"])
     return "Hi"
+'''
 
 if __name__ == "__main__":
     app.run(ssl_context="adhoc")
