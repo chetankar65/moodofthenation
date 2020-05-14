@@ -163,6 +163,7 @@ def news():
     return "Hi"
 '''
 
+
 if __name__ == "__main__":
     app.run(ssl_context="adhoc")
     # This is done as a lot of google APIs do not work unless there is an SSL certificate.
