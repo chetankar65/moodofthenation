@@ -1,6 +1,9 @@
 import json
 import os
 import sqlite3
+#from flask_socketio import SocketIO, emit
+from news import NewsFromBBC
+
 
 # Third-party libraries
 from flask import Flask, redirect, request, url_for, render_template
@@ -31,8 +34,9 @@ GOOGLE_DISCOVERY_URL = (
 
 # Flask app setup
 app = Flask(__name__)
-#app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
-app.secret_key = 'chetD0ne'
+app.config["SECRET_KEY"] = '12121221'
+#socketio = SocketIO(app)
+
 
 # User session management setup
 login_manager = LoginManager()
@@ -150,24 +154,14 @@ def callback():
 def logout():
     logout_user()
     return redirect(url_for("index"))
-'''
+
+####news endpoint
 @app.route('/news')
 def news():
-    top_headlines = newsapi.get_top_headlines(q='bitcoin',category='business',language='en',country='us')
-
-    sources = newsapi.get_sources()
-
-    print(top_headlines["articles"])
-    for article in top_headlines["articles"]:
-        print(article[0]["author"],article[0]["title"],article[0]["description"])
-    return "Hi"
-'''
-
+    return render_template('news.html')
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc")
+    app.run(ssl_context="adhoc",debug=True)
     # This is done as a lot of google APIs do not work unless there is an SSL certificate.
     # The pythonSSL module creates an SSL certificate on the fly. There will be a warning
     # as the certificate is not verified, but we can advance.It's fine
-
-#news api: cf454be3d2784854a6d0c0e3b6363c29

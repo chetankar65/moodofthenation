@@ -1,9 +1,11 @@
-import requests      
+import requests
+import os
+      
   
 def NewsFromBBC(): 
       
     # BBC news api 
-    main_url = " https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=cf454be3d2784854a6d0c0e3b6363c29"
+    main_url = "https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey={key}".format(key = os.getenv("NEWSAPI"))
   
     # fetching data in json format 
     open_bbc_page = requests.get(main_url).json() 
@@ -14,14 +16,10 @@ def NewsFromBBC():
     # empty list which will  
     # contain all trending news 
     results = [] 
-      
     for ar in article: 
         results.append(ar["description"]) 
-          
-    for i in range(len(results)): 
-          
-        # printing all trending news 
-        print(i + 1, results[i])                  
+        
+    return results                  
   
 # Driver Code 
 if __name__ == '__main__': 
