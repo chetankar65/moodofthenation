@@ -34,7 +34,7 @@ GOOGLE_DISCOVERY_URL = (
 
 # Flask app setup
 app = Flask(__name__)
-app.config["SECRET_KEY"] = '12121221'
+app.config["SECRET_KEY"] = os.getenv('APP_KEY')
 #socketio = SocketIO(app)
 
 
