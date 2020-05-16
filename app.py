@@ -1,9 +1,7 @@
 import json
 import os
 import sqlite3
-#from flask_socketio import SocketIO, emit
 from news import NewsFromBBC
-
 
 # Third-party libraries
 from flask import Flask, redirect, request, url_for, render_template
@@ -35,7 +33,6 @@ GOOGLE_DISCOVERY_URL = (
 # Flask app setup
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv('APP_KEY')
-#socketio = SocketIO(app)
 
 
 # User session management setup
@@ -70,7 +67,8 @@ def get_google_provider_cfg():
 def index():
     if current_user.is_authenticated:
         user = current_user.name
-        return render_template('dashboard.html', user = user)
+        top_headlines = NewsFromBBC()
+        return render_template('dashboard.html', user = user, top_headlines = top_headlines)
         #current_user.name, current_user.email, current_user.profile_pic
     else:
         return render_template('index.html')
@@ -158,10 +156,13 @@ def logout():
 ####news endpoint
 @app.route('/news')
 def news():
-    return render_template('news.html')
+    top_headlines = NewsFromBBC()
+    return render_template('news.html', top_headlines = top_headlines)
+
+#@app.errorhandler(404)
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc",debug=True)
+    app.run(ssl_context="adhoc", debug = True)
     # This is done as a lot of google APIs do not work unless there is an SSL certificate.
     # The pythonSSL module creates an SSL certificate on the fly. There will be a warning
     # as the certificate is not verified, but we can advance.It's fine
