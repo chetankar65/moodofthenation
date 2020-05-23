@@ -1,6 +1,7 @@
 from flask_login import UserMixin
 
-from db import get_db
+import sqlite3
+
 
 class User(UserMixin):
     def __init__(self, id_, name, email, profile_pic):
@@ -13,7 +14,7 @@ class User(UserMixin):
     #but you can't access the instance of that class (this is useful when your method does not use the instance).
     @staticmethod
     def get(user_id):
-        db = get_db()
+        db = sqlite3.connect('user_db')
         user = db.execute(
             "SELECT * FROM user WHERE id = ?", (user_id,)
         ).fetchone()
@@ -27,7 +28,7 @@ class User(UserMixin):
 
     @staticmethod
     def create(id_, name, email, profile_pic):
-        db = get_db()
+        db = sqlite3.connect('user_db')
         db.execute(
             "INSERT INTO user (id, name, email, profile_pic) "
             "VALUES (?, ?, ?, ?)",

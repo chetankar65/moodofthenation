@@ -2,11 +2,12 @@ from selenium import webdriver
 import unittest
 import os
 import sqlite3
-from db import get_db,init_db_command
+from db import init_db_command
 from news import NewsFromBBC
 from user import User
 
-# Naive database setup
+# Naive database setup; Database testing
+
 try:
     init_db_command()
 except sqlite3.OperationalError:
@@ -27,12 +28,5 @@ def selenium_testing():
     python_button = driver.find_element_by_id("login")
     python_button.click()
 
-######
-
-############## Database testing
-
-##############
-
-
-
-#Run some tests here
+#####Sentiment analysis tests
+#print(sentiment('Outage monitor records thousands of reports of issues'))

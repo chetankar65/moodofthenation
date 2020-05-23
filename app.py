@@ -1,10 +1,10 @@
 import json
 import os
 import sqlite3
-from news import NewsFromBBC
+import csv
 
 # Third-party libraries
-from flask import Flask, redirect, request, url_for, render_template
+from flask import Flask, redirect, request, url_for, render_template, jsonify
 from flask_login import (
     LoginManager,
     current_user,
@@ -13,12 +13,15 @@ from flask_login import (
     logout_user,
 )
 from oauthlib.oauth2 import WebApplicationClient
+from news import NewsFromBBC
 import requests
+
+from headline import Headline
+from current_mood import Current
 
 # Internal imports
 from db import init_db_command
 from user import User
-
 # Configuration
 ### Set environment variables for GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,GOOGLE_DISCOVERY_URL
 
@@ -38,6 +41,7 @@ app.config["SECRET_KEY"] = os.getenv('APP_KEY')
 # User session management setup
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 @login_manager.unauthorized_handler
 def unauthorized():
@@ -66,9 +70,9 @@ def get_google_provider_cfg():
 @app.route("/")
 def index():
     if current_user.is_authenticated:
+        ###########
         user = current_user.name
-        top_headlines = NewsFromBBC()
-        return render_template('dashboard.html', user = user, top_headlines = top_headlines)
+        return render_template('dashboard.html', user = user)
         #current_user.name, current_user.email, current_user.profile_pic
     else:
         return render_template('index.html')
@@ -153,11 +157,27 @@ def logout():
     logout_user()
     return redirect(url_for("index"))
 
-####news endpoint
-@app.route('/news')
+@app.route('/latestnews')
+def latest_news():
+    #mood_arr = realtime()
+    top_headlines = []
+    for i in Headline.get():
+        top_headlines.append(i[1])
+    filename = "graph_data.csv"
+    with open(filename, 'r') as csvfile:
+        data_list = list(csv.reader(csvfile))
+        yaxis = data_list[0]
+        xaxis = data_list[1]
+    current = []
+    for x in Current.get():
+        current.append(x[0])
+
+    ##########
+    return jsonify({'success':True, 'top_headlines':top_headlines, 'mood': Current.get()[0][0], 'xaxis':xaxis,'yaxis':yaxis,'current':current})
+
+@app.route("/news")
 def news():
-    top_headlines = NewsFromBBC()
-    return render_template('news.html', top_headlines = top_headlines)
+    return render_template('news.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -166,6 +186,7 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     app.run(ssl_context="adhoc", debug = True)
-    # This is done as a lot of google APIs do not work unless there is an SSL certificate.
+    # This is done as a lot of google APIs do not work unless there 
+    # is an SSL certificate.
     # The pythonSSL module creates an SSL certificate on the fly. There will be a warning
     # as the certificate is not verified, but we can advance.It's fine
