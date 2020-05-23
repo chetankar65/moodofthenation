@@ -13,6 +13,11 @@ Here are the main endpoints of the app:
 
 This app consists of various things we have learnt in the course (such as Flask, Javascript, SQL, APIs, python and many, many more).
 
+To run this application, you need to get a ParallelDot API key, NewsAPI key and Google Third party API Key.
+This application is made using flask.
+
+Made with &#9829; by Chetan Kar 
+
 
 
 
