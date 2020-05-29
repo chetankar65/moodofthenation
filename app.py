@@ -1,7 +1,5 @@
-import json
-import os
-import sqlite3
-import csv
+import json, os, sqlite3, csv
+
 
 # Third-party libraries
 from flask import Flask, redirect, request, url_for, render_template, jsonify

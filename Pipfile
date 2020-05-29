@@ -8,16 +8,11 @@ verify_ssl = true
 [packages]
 flask = "*"
 gunicorn = "*"
-csv = "*"
 ParallelDots = "*"
 Flask-Login = "*"
 pyOpenSSL = "*"
 sqlite3 = "*"
 requests = "*"
-json = "*"
-oauthlib = "*"
-datetime = "*"
-time = "*"
 
 [requires]
 python_version = "3.7"
