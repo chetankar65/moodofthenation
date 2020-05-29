@@ -184,9 +184,11 @@ def page_not_found(e):
     # note that we set the 404 status explicitly
     return render_template('404.html'), 404
 
+'''
 if __name__ == "__main__":
     app.run(ssl_context="adhoc", debug = True)
-    # This is done as a lot of google APIs do not work unless there 
-    # is an SSL certificate.
-    # The pythonSSL module creates an SSL certificate on the fly. There will be a warning
-    # as the certificate is not verified, but we can advance.It's fine
+'''
+# This is done as a lot of google APIs do not work unless there 
+# is an SSL certificate.
+# The pythonSSL module creates an SSL certificate on the fly. There will be a warning
+# as the certificate is not verified, but we can advance.It's fine
