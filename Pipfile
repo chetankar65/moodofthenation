@@ -15,7 +15,7 @@ pyOpenSSL = "*"
 requests = "*"
 psycopg2 = "*"
 sqlalchemy = "*"
-
+oauthlib = "*"
 
 [requires]
 python_version = "3.7"
