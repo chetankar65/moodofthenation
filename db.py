@@ -1,8 +1,12 @@
 import sqlite3
+import psycopg2
 
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
+
+#DATABASE_URL = 'postgresql+psycopg2://wkgfzugsoqiodi:069315c61275af8149802e0a8431883970eae396e0b0f59127ee4e781bde7505@ec2-54-246-87-132.eu-west-1.compute.amazonaws.com:5432/d655c1e7ookde1'
+
 
 def get_db():
     if "db" not in g:

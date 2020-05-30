@@ -1,5 +1,8 @@
 import json, os, sqlite3, csv
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+import psycopg2
 
 # Third-party libraries
 from flask import Flask, redirect, request, url_for, render_template, jsonify
@@ -17,13 +20,15 @@ import requests
 from headline import Headline
 from current_mood import Current
 
-# Internal imports
-from db import init_db_command
 from user import User
 # Configuration
 ### Set environment variables for GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,GOOGLE_DISCOVERY_URL
 
 #. ~/.bashrc - Run before starting server
+DATABASE_URL = 'postgresql+psycopg2://ljcnuxagkumbwa:acdb25f7e24cc31d92dd48347a675e59e7740dd51b0b09bcf87b3162c6222e0c@ec2-54-195-247-108.eu-west-1.compute.amazonaws.com:5432/d89hhd9gpdpvfm'
+
+engine = create_engine(DATABASE_URL) #Postgres database URL hosted on heroku
+db = scoped_session(sessionmaker(bind=engine))
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
@@ -44,13 +49,6 @@ login_manager.init_app(app)
 @login_manager.unauthorized_handler
 def unauthorized():
     return "You must be logged in to access this content.", 403
-
-# Naive database setup
-try:
-    init_db_command()
-except sqlite3.OperationalError:
-    # Assume it's already been created
-    pass
 
 # OAuth 2 client setup
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
@@ -182,10 +180,7 @@ def page_not_found(e):
     # note that we set the 404 status explicitly
     return render_template('404.html'), 404
 
-'''
-if __name__ == "__main__":
-    app.run(ssl_context="adhoc", debug = True)
-'''
+
 # This is done as a lot of google APIs do not work unless there 
 # is an SSL certificate.
 # The pythonSSL module creates an SSL certificate on the fly. There will be a warning

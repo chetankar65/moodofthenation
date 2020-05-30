@@ -1,11 +1,18 @@
 from news import NewsFromBBC
 import paralleldots
 import os
-import sqlite3
 from paralleldots import sentiment
 import time
 import datetime
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+import psycopg2
+
+DATABASE_URL = 'postgresql+psycopg2://ljcnuxagkumbwa:acdb25f7e24cc31d92dd48347a675e59e7740dd51b0b09bcf87b3162c6222e0c@ec2-54-195-247-108.eu-west-1.compute.amazonaws.com:5432/d89hhd9gpdpvfm'
+
+engine = create_engine(DATABASE_URL) #Postgres database URL hosted on heroku
+conn = scoped_session(sessionmaker(bind=engine))
 
 paralleldots.set_api_key(os.getenv('PARALLEL_DOTS'))
 paralleldots.get_api_key()
@@ -29,23 +36,21 @@ while True:
     #################
     def realtime():
         mood_arr = []
-        conn = sqlite3.connect('mood_db')
         top_headlines = NewsFromBBC()
         conn.execute('DELETE FROM headlines')
         for headline in top_headlines:
             if (headline != None):
                 #print(sentiment_tracker(headline))
                 mood_arr.append(sentiment_tracker(headline))                
-                conn.execute('INSERT INTO headlines (headline) VALUES (?)', (headline,))
+                conn.execute('INSERT INTO headlines (headline) VALUES (:headline)', {"headline":headline})
         conn.commit()
         conn.close()
                                                                                         
         # count frequency and store in global variable
         mood = CountFrequency(mood_arr)
-        
-        connection = sqlite3.connect('mood_db')
+        connection = scoped_session(sessionmaker(bind=engine))
         x = datetime.datetime.now()
-        connection.execute('INSERT INTO current (mood, hour) VALUES (?,?)',(mood,x.strftime("%x"),))
+        connection.execute('INSERT INTO current (mood, hour) VALUES (:mood,:date)',{"mood":mood,"date":x.strftime("%x")})
         connection.commit()
         connection.close()
         return mood

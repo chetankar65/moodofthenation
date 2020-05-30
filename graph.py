@@ -1,10 +1,16 @@
 #### Graph logic here
-import sqlite3
+import psycopg2
 import datetime
 import csv
 import time
 
-#datetime.date.today() + datetime.timedelta(days=1)
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+DATABASE_URL = 'postgresql+psycopg2://ljcnuxagkumbwa:acdb25f7e24cc31d92dd48347a675e59e7740dd51b0b09bcf87b3162c6222e0c@ec2-54-195-247-108.eu-west-1.compute.amazonaws.com:5432/d89hhd9gpdpvfm'
+
+engine = create_engine(DATABASE_URL) #Postgres database URL hosted on heroku
+db = scoped_session(sessionmaker(bind=engine))
 
 def CountFrequency(my_list): 
     freq = {} 
@@ -24,11 +30,11 @@ while True:
     today_arr = []
     yesterday_arr = []
     day_before_yesterday = []
-    for row in db.execute('SELECT * FROM current WHERE hour = ?',(today.strftime("%x"),)):
+    for row in db.execute('SELECT * FROM current WHERE hour = :date',{"date":today.strftime("%x")}):
         today_arr.append(row[1])
-    for row in db.execute('SELECT * FROM current WHERE hour = ?',(yesterday.strftime("%x"),)):
+    for row in db.execute('SELECT * FROM current WHERE hour = :date',{"date":yesterday.strftime("%x")}):
         yesterday_arr.append(row[1])
-    for row in db.execute('SELECT * FROM current WHERE hour = ?',(daybeforeyesterday.strftime("%x"),)):
+    for row in db.execute('SELECT * FROM current WHERE hour = :date',{"date":daybeforeyesterday.strftime("%x")}):
         day_before_yesterday.append(row[1])
 
     
