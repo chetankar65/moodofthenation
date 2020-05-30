@@ -22,7 +22,6 @@ def CountFrequency(my_list):
     return max(freq, key=freq.get)
 
 while True:
-    db = sqlite3.connect('mood_db')
     today = datetime.datetime.now()
     yesterday = datetime.datetime.now() + datetime.timedelta(days=-1)
     daybeforeyesterday = datetime.datetime.now() + datetime.timedelta(days=-2)
