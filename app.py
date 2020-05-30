@@ -25,20 +25,20 @@ from user import User
 ### Set environment variables for GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,GOOGLE_DISCOVERY_URL
 
 #. ~/.bashrc - Run before starting server
-DATABASE_URL = 'postgresql+psycopg2://ljcnuxagkumbwa:acdb25f7e24cc31d92dd48347a675e59e7740dd51b0b09bcf87b3162c6222e0c@ec2-54-195-247-108.eu-west-1.compute.amazonaws.com:5432/d89hhd9gpdpvfm'
+DATABASE_URL = process.env.DATABASE_URL
 
 engine = create_engine(DATABASE_URL) #Postgres database URL hosted on heroku
 db = scoped_session(sessionmaker(bind=engine))
 
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
 GOOGLE_DISCOVERY_URL = (
     "https://accounts.google.com/.well-known/openid-configuration"
 )
 
 # Flask app setup
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.getenv('APP_KEY')
+app.config["SECRET_KEY"] = process.env.APP_KEY
 
 
 # User session management setup
