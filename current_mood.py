@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 import psycopg2
+import os
 
-DATABASE_URL = process.env.DATABASE_URL
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL) #Postgres database URL hosted on heroku
 db = scoped_session(sessionmaker(bind=engine))
