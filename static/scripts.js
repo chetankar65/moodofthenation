@@ -5,14 +5,12 @@ function chart(labels,data){
         type: 'line',
         data: {
             labels: labels,
+            fill: false,
             datasets: [{
                 label: '"Mood" trend for the week',
                 data: data,
-                backgroundColor: [
-                    'aquamarine'
-                ],
                 borderColor: [
-                    'lightgrey'
+                    'aquamarine'
                 ],
                 borderWidth: 1
             }]
