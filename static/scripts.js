@@ -1,17 +1,15 @@
 function chart(labels,data){
     var ctx = document.getElementById('myChart').getContext('2d');
-    document.getElementById("graphLoader").remove();
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
-            fill: false,
             datasets: [{
                 label: '"Mood" trend for the week',
+                fill: false,
+                backgroundColor: 'blue',
                 data: data,
-                borderColor: [
-                    'aquamarine'
-                ],
+                borderColor: 'blue',
                 borderWidth: 1
             }]
         },
