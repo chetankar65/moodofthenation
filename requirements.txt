@@ -1,0 +1,9 @@
+requests==2.21.0
+Flask==1.0.2
+oauthlib==3.0.1
+pyOpenSSL==19.0.0
+Flask-Login==0.4.1
+ParallelDots==3.2.13
+oauthlib==3.0.1
+psycopg2-binary
+SQLAlchemy
