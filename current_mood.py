@@ -17,7 +17,7 @@ class Current():
     #(this is useful when your method does not use the instance).
     @staticmethod
     def get():
-        current = db.execute('SELECT mood FROM current ORDER BY id DESC LIMIT 3').fetchall()
+        current = db.execute('SELECT mood FROM current ORDER BY id DESC LIMIT 4').fetchall()
         return current
     
     @staticmethod
