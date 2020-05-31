@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 var content = ''
-                for (var i = 0; i < data.current.length;i++){
+                for (var i = 1; i < data.current.length;i++){
                 //console.log(data.current[i])
                     if (data.current[i] == 3){
                         content += `
