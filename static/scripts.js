@@ -1,39 +1,3 @@
-function chart(labels,data){
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: '"Mood" trend for the week',
-                fill: false,
-                backgroundColor: 'blue',
-                data: data,
-                borderColor: 'blue',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Day'
-                        }
-                    }],
-                yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMax: 3
-                        }
-                }]
-            },
-        }
-    });
-}
-//////////////////////////////
 function sleep(milliseconds) {
     var start = new Date().getTime();
     for (var i = 0; i < 1e7; i++) {
@@ -69,8 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     `
                 }
                 document.querySelector('#latestnews').innerHTML = contents;
-
-                chart(data.xaxis,data.yaxis)
                 
                 if (data.mood == 3){
                     document.getElementById('emoji').innerHTML = `<img src="/static/download.jpeg" style="width: 150px;height: 150px;">`
