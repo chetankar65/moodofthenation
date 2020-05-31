@@ -159,17 +159,13 @@ def latest_news():
     top_headlines = []
     for i in Headline.get():
         top_headlines.append(i[1])
-    filename = "graph_data.csv"
-    with open(filename, 'r') as csvfile:
-        data_list = list(csv.reader(csvfile))
-        yaxis = data_list[0]
-        xaxis = data_list[1]
+        
     current = []
     for x in Current.get():
         current.append(x[0])
 
     ##########
-    return jsonify({'success':True, 'top_headlines':top_headlines, 'mood': Current.get()[0][0], 'xaxis':xaxis,'yaxis':yaxis,'current':current})
+    return jsonify({'success':True, 'top_headlines':top_headlines, 'mood': Current.get()[0][0], 'current':current})
 
 @app.route("/news")
 def news():
