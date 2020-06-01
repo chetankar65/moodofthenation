@@ -35,13 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('#latestnews').innerHTML = contents;
                 
                 if (data.mood == 3){
-                    document.getElementById('emoji').innerHTML = `<img src="/static/download.jpeg" style="width: 150px;height: 150px;">`
+                    document.getElementById('emoji').innerHTML = `<img src="/static/download.png" style="width: 150px;height: 150px;">`
                     document.getElementById('mood_description').innerHTML = `The nation seems very happy!
                     Let's keep it up!
                     `
                     document.getElementById('mood_description').style.color = "green"
                 } else if (data.mood == 1){
-                    document.getElementById('emoji').innerHTML = `<img src="/static/terrified.jpeg" style="width: 150px;height: 150px;">`
+                    document.getElementById('emoji').innerHTML = `<img src="/static/terrified.png" style="width: 150px;height: 150px;">`
                     document.getElementById('mood_description').innerHTML = `Not in a very good shape, but keep your chin up!
                     `
                     document.getElementById('mood_description').style.color = "red"
@@ -63,13 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.current[i] == 3){
                         content += `
                             <div class="col-4 col-sm-4 col-lg-4">
-                                <img src="/static/download.jpeg" style="width: 80px;height: 80px;">
+                                <img src="/static/download.png" style="width: 80px;height: 80px;">
                             </div>
                         `
                     } else if (data.current[i] == 1){
                         content += `
                         <div class="col-4 col-sm-4 col-lg-4">
-                            <img src="/static/terrified.jpeg" style="width: 80px;height: 80px;">
+                            <img src="/static/terrified.png" style="width: 80px;height: 80px;">
                         </div>
                         `   
                     } else {
