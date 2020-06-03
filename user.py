@@ -30,7 +30,7 @@ class User(UserMixin):
 
     @staticmethod
     def create(id_, name, email, profile_pic):
-        db.execute("INSERT INTO users (id, name, email, profile_pic, dark) VALUES (:id, :name, :email, :profile, :bool)",{"id":id_, "name":name, "email":email, "profile":profile_pic, 'bool':'f'})
+        db.execute("INSERT INTO users (id, name, email, profile_pic, dark) VALUES (:id, :name, :email, :profile, :bool)",{"id":id_, "name":name, "email":email, "profile":profile_pic, 'bool':False})
         db.commit()
         db.close()
     

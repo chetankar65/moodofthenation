@@ -66,12 +66,33 @@ def get_google_provider_cfg():
 @app.route("/")
 def index():
     if current_user.is_authenticated:
-        ###########
         user = current_user.name
-        return render_template('dashboard.html', user = user)
+        user_id = current_user.id
+        dark_db = db.execute('SELECT dark FROM users WHERE id = :id',{"id":user_id}).fetchall()[0][0]
+        if (dark_db == False):
+            dark = False
+        else:
+            dark = True
+        return render_template('dashboard.html', user = user, dark = dark)
         #current_user.name, current_user.email, current_user.profile_pic
     else:
         return render_template('index.html')
+
+################
+@app.route("/profile")
+def profile():
+    if current_user.is_authenticated:
+        user = current_user.name
+        profile_pic = current_user.profile_pic
+        user_id = current_user.id
+        dark_db = db.execute('SELECT dark FROM users WHERE id = :id',{"id":user_id}).fetchall()[0][0]
+        if (dark_db == False):
+            dark = False
+        else:
+            dark = True
+        return render_template('account.html', user = user, profile_pic = profile_pic, dark = dark)
+    else:
+        return redirect('/')
 
 
 ### Login endppoint
@@ -167,9 +188,20 @@ def latest_news():
     ##########
     return jsonify({'success':True, 'top_headlines':top_headlines, 'mood': Current.get()[0][0], 'current':current})
 
-@app.route("/news")
-def news():
-    return render_template('news.html')
+@app.route('/update_account', methods=['POST'])
+def update_account():
+    if (request.method == 'POST'):
+        check = request.form.getlist('check')
+        print(check)
+        if (check[0] == '1'):
+            db.execute('UPDATE users SET dark = :check WHERE id = :id', {'check':True, 'id':current_user.id})
+            db.commit()
+            return jsonify({'success':True}) 
+        else:
+            db.execute('UPDATE users SET dark = :check WHERE id = :id', {'check':False, 'id':current_user.id})
+            db.commit()
+            return jsonify({'success':True}) 
+        return jsonify({'success':False}) 
 
 
 @app.errorhandler(404)
