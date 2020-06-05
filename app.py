@@ -65,6 +65,7 @@ def get_google_provider_cfg():
 ################
 @app.route("/")
 def index():
+    ## homepage
     if current_user.is_authenticated:
         user = current_user.name
         user_id = current_user.id
@@ -81,6 +82,7 @@ def index():
 ################
 @app.route("/profile")
 def profile():
+    # profile page
     if current_user.is_authenticated:
         user = current_user.name
         profile_pic = current_user.profile_pic
@@ -190,6 +192,7 @@ def latest_news():
 
 @app.route('/update_account', methods=['POST'])
 def update_account():
+    #update account details
     if (request.method == 'POST'):
         check = request.form.getlist('check')
         print(check)
@@ -203,6 +206,9 @@ def update_account():
             return jsonify({'success':True}) 
         return jsonify({'success':False}) 
 
+@app.route('/timeline')
+def timeline():
+    return render_template('charts.html')
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Visual data | Moodofthenation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm bg-light navbar-light" id="nav">
+    <!-- Brand/logo -->
+    <a class="navbar-brand" href="/">
+        <img src={{url_for('static', filename='logo.png')}} style="height: 50px;">
+    </a>
+    
+    <!-- Links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Welcome,{{user}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Location:India</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/profile">Account settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Timeline</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </nav>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <canvas id="line"></canvas>
+            <br><br>
+            <h3 align='center'>Timeline</h3><br>
+            <div class="row">
+              <div class="col-3 col-sm-3 col-lg-3">Before 1 hour <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
+              <div class="col-3 col-sm-3 col-lg-3">Before 2 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
+              <div class="col-3 col-sm-3 col-lg-3">Before 3 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
+              <div class="col-3 col-sm-3 col-lg-3">Before 4 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
+            </div>
+            <br><br>
+            <div class="row">
+              <div class="col-3 col-sm-3 col-lg-3">Before 5 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
+              <div class="col-3 col-sm-3 col-lg-3">Before 6 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
+              <div class="col-3 col-sm-3 col-lg-3">Before 7 hours<br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
+              <div class="col-3 col-sm-3 col-lg-3">Before 8 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
+            </div> 
+        </div>
+        <div class="col-lg-6">
+            <canvas id="line2"></canvas><br><br>
+            <canvas id="pie" style="width: 50%;height:200px;"></canvas><br><br>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+var ctx = document.getElementById('line').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: 'Weekly trend',
+            data: [12, 19, 3, 5, 2, 3, 6, 8 ,9.5, 7.5],
+            backgroundColor: '#8080ff',
+            borderColor: 'black',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+var ctx1 = document.getElementById("pie").getContext('2d');
+var myChart1 = new Chart(ctx1, {
+  type: 'pie',
+  data: {
+    labels: ["Green", "Blue", "Gray", "Purple", "Yellow", "Red"],
+    datasets: [{
+      backgroundColor: [
+        "#2ecc71",
+        "#3498db",
+        "#95a5a6",
+        "#9b59b6",
+        "#f1c40f",
+        "#e74c3c",
+      ],
+      data: [12, 19, 3, 17, 28, 24, 7]
+    }]
+  }
+});
+
+var ctx3 = document.getElementById('line2').getContext('2d');
+var myChart3 = new Chart(ctx3, {
+    type: 'line',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: 'Monthly trend',
+            borderDash: [5, 5],
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: 'transparent',
+            borderColor: 'red',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+</html>
