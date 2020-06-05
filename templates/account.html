@@ -81,10 +81,15 @@
       .slider.round:before {
         border-radius: 50%;
       }
+
+      body { 
+        opacity: 0; 
+        transition: opacity 3s; 
+      } 
       
     </style>
 </head>
-<body>
+<body onload="document.body.style.opacity='1'">
     <nav class="navbar navbar-expand-sm bg-light navbar-light" id="nav">
         <!-- Brand/logo -->
         <a class="navbar-brand" href="/">
