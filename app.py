@@ -4,6 +4,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 import psycopg2
 
+from datetime import date 
+from datetime import timedelta 
+
 # Third-party libraries
 from flask import Flask, redirect, request, url_for, render_template, jsonify
 from flask_login import (
@@ -18,6 +21,7 @@ from news import NewsFromBBC
 import requests
 
 from headline import Headline
+from data import Data
 from current_mood import Current
 
 from user import User
@@ -176,6 +180,7 @@ def logout():
     logout_user()
     return redirect(url_for("index"))
 
+#### latest news
 @app.route('/latestnews')
 def latest_news():
     #mood_arr = realtime()
@@ -190,6 +195,7 @@ def latest_news():
     ##########
     return jsonify({'success':True, 'top_headlines':top_headlines, 'mood': Current.get()[0][0], 'current':current})
 
+## update account details
 @app.route('/update_account', methods=['POST'])
 def update_account():
     #update account details
@@ -206,15 +212,39 @@ def update_account():
             return jsonify({'success':True}) 
         return jsonify({'success':False}) 
 
+
+### charts html file
 @app.route('/timeline')
 def timeline():
-    return render_template('charts.html')
+    if current_user.is_authenticated:
+        return render_template('charts.html')
+
+### timeline data
+@app.route('/timeline_data')
+def timeline_data():
+    if current_user.is_authenticated:
+        day1 = date.today()
+        day2 = day1 - timedelta(days = 1)
+        day3 = day1 - timedelta(days = 2)
+        day4 = day1 - timedelta(days = 3)
+        day5 = day1 - timedelta(days = 4)
+        #### days array
+        days = [day5, day4, day3, day2, day1]
+        day1_mood = Data.getDays(day1)
+        day2_mood = Data.getDays(day2)
+        day3_mood = Data.getDays(day3)
+        day4_mood = Data.getDays(day4)
+        day5_mood = Data.getDays(day5)
+        #### mood array
+        mood_arr = [day5_mood, day4_mood, day3_mood, day2_mood, day1_mood]
+        return jsonify({'success':True, 'days':days, 'moods':mood_arr}) 
+    #### Mood array
+
 
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly
     return render_template('404.html'), 404
-
 
 # This is done as a lot of google APIs do not work unless there 
 # is an SSL certificate.

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="max-age=3600"/>
     <title>Visual data | Moodofthenation</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -11,9 +12,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <style>
+      body { 
+        opacity: 0; 
+        transition: opacity 3s; 
+      } 
+      #newsfeed{  
+        width:100%;  
+        height:150px;
+        margin:auto;
+        margin-top:10px;
+        border-radius:10px;
+        background-color:#ededed;
+      }
     </style>
 </head>
-<body>
+<body onload="document.body.style.opacity='1'">
   <nav class="navbar navbar-expand-sm bg-light navbar-light" id="nav">
     <!-- Brand/logo -->
     <a class="navbar-brand" href="/">
@@ -60,80 +73,47 @@
             </div> 
         </div>
         <div class="col-lg-6">
-            <canvas id="line2"></canvas><br><br>
-            <canvas id="pie" style="width: 50%;height:200px;"></canvas><br><br>
+            <canvas id="line2"></canvas><br><br><br>
+            <h3 align="center">Newsfeed</h3><br>
+              <div class="container">
+                <div id="carouselContent blck" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" role="listbox" id="newsfeed">
+                        <div class="carousel-item active text-center p-4">
+                          <p>lorem ipsum (imagine longer text) lorem ipsum (imagine longer text) lorem ipsum (imagine longer text)
+                            lorem ipsum (imagine longer text)lorem ipsum (imagine longer text)
+                          </p>
+                        </div>
+                        <div class="carousel-item text-center p-4">
+                          <p>lorem ipsum (imagine longer text) lorem ipsum (imagine longer text) lorem ipsum (imagine longer text)
+                            lorem ipsum (imagine longer text)lorem ipsum (imagine longer text)
+                          </p>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div align='center'>
+                  <a class="btn btn-dark" href="https://github.com/studentchetan/moodofthenation" role="button" style="text-transform:none;width:40%">
+                    GITHUB
+                  </a>
+                  <a class="btn btn-primary" href="#" role="button" style="text-transform:none;width:40%">
+                    DISCORD
+                  </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 </body>
-<script>
-var ctx = document.getElementById('line').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: 'Weekly trend',
-            data: [12, 19, 3, 5, 2, 3, 6, 8 ,9.5, 7.5],
-            backgroundColor: '#8080ff',
-            borderColor: 'black',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-
-
-var ctx1 = document.getElementById("pie").getContext('2d');
-var myChart1 = new Chart(ctx1, {
-  type: 'pie',
-  data: {
-    labels: ["Green", "Blue", "Gray", "Purple", "Yellow", "Red"],
-    datasets: [{
-      backgroundColor: [
-        "#2ecc71",
-        "#3498db",
-        "#95a5a6",
-        "#9b59b6",
-        "#f1c40f",
-        "#e74c3c",
-      ],
-      data: [12, 19, 3, 17, 28, 24, 7]
-    }]
-  }
-});
-
-var ctx3 = document.getElementById('line2').getContext('2d');
-var myChart3 = new Chart(ctx3, {
-    type: 'line',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: 'Monthly trend',
-            borderDash: [5, 5],
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: 'transparent',
-            borderColor: 'red',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-</script>
+<script src="/Users/chetu/Desktop/Projects/moodofthenation/static/charts.js" ></script>
+<!--
+{% if dark == True %}
+    <script>
+        document.body.style.background = '#00001a';
+        document.body.style.color = 'white';
+        document.getElementById('live').style.background = '#00001a';
+        document.getElementById('live').style.color = 'white';
+        document.getElementById('nav').className = 'navbar navbar-expand-sm bg-dark navbar-dark';
+    </script>
+{% endif %}
+-->
 </html>
