@@ -1,8 +1,8 @@
 on:
     issue_comment:
       types: [created]
-    name: Claim Issue
-    jobs:
+      name: Claim Issue
+      jobs:
         assign:
           name: Update labels and Assign
           if: github.event.issue.pull_request == ''
