@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/github-script@0.9.0
         with:
-          github-token: ${{secrets.GITHUBTOKEN}}
+          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             await github.issues.addLabels({
               issue_number: context.issue.number,
