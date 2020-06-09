@@ -48,21 +48,21 @@ function xhr()
                     if (data.timeline[i] == 3){
                         content += `
                             <div class="col-3 col-sm-3 col-lg-3">
-                            Before ${i} hours <br><br>
+                            Before ${i + 1} hours <br><br>
                                 <img src="/static/download.png" style="width: 80px;height: 80px;"><br><br>
                             </div>
                         `
                     } else if (data.timeline[i] == 1){
                         content += `
                         <div class="col-3 col-sm-3 col-lg-3">
-                            Before ${i} hours <br><br>
+                            Before ${i + 1} hours <br><br>
                             <img src="/static/terrified.png" style="width: 80px;height: 80px;"><br><br>
                         </div>
                         `   
                     } else {
                         content += `
                             <div class="col-3 col-sm-3 col-lg-3">
-                                Before ${i} hours <br><br>
+                                Before ${i + 1} hours <br><br>
                                 <img src="/static/neutral.png" style="width: 80px;height: 80px;"><br><br>
                             </div>
                         `
