@@ -11,19 +11,50 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" href="/Users/chetu/Desktop/Projects/moodofthenation/static/styles.css">
     <style>
       body { 
         opacity: 0; 
         transition: opacity 3s; 
       } 
-      #newsfeed{  
-        width:100%;  
-        height:150px;
-        margin:auto;
-        margin-top:10px;
-        border-radius:10px;
-        background-color:#ededed;
+      .lds-load {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
       }
+      .lds-load div {
+        display: inline-block;
+        position: absolute;
+        left: 8px;
+        width: 16px;
+        background: #cef;
+        animation: lds-load 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+      }
+      .lds-load div:nth-child(1) {
+        left: 8px;
+        animation-delay: -0.24s;
+      }
+      .lds-load div:nth-child(2) {
+        left: 32px;
+        animation-delay: -0.12s;
+      }
+      .lds-load div:nth-child(3) {
+        left: 56px;
+        animation-delay: 0;
+      }
+      @keyframes lds-load {
+        0% {
+          top: 8px;
+          height: 64px;
+        }
+        50%, 100% {
+          top: 24px;
+          height: 32px;
+        }
+      }
+
     </style>
 </head>
 <body onload="document.body.style.opacity='1'">
@@ -45,75 +76,36 @@
         <a class="nav-link" href="/profile">Account settings</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Timeline</a>
+        <a class="nav-link" href="/timeline">Timeline</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
     </ul>
-  </nav>
+  </nav><br><br>
 <div class="container">
+  <div class="lds-load" id="load"><div></div><div></div><div></div></div>
     <div class="row">
         <div class="col-lg-6">
             <canvas id="line"></canvas>
             <br><br>
             <h3 align='center'>Timeline</h3><br>
-            <div class="row">
-              <div class="col-3 col-sm-3 col-lg-3">Before 1 hour <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
-              <div class="col-3 col-sm-3 col-lg-3">Before 2 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
-              <div class="col-3 col-sm-3 col-lg-3">Before 3 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
-              <div class="col-3 col-sm-3 col-lg-3">Before 4 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
+            <div class="row" id="emojis">
+                            
             </div>
-            <br><br>
-            <div class="row">
-              <div class="col-3 col-sm-3 col-lg-3">Before 5 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
-              <div class="col-3 col-sm-3 col-lg-3">Before 6 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
-              <div class="col-3 col-sm-3 col-lg-3">Before 7 hours<br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
-              <div class="col-3 col-sm-3 col-lg-3">Before 8 hours <br><br> <img src="/Users/chetu/Desktop/Projects/moodofthenation/static/download.png" style="width: 70px;height: 70px;"></div>
-            </div> 
         </div>
         <div class="col-lg-6">
-            <canvas id="line2"></canvas><br><br><br>
-            <h3 align="center">Newsfeed</h3><br>
-              <div class="container">
-                <div id="carouselContent blck" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner" role="listbox" id="newsfeed">
-                        <div class="carousel-item active text-center p-4">
-                          <p>lorem ipsum (imagine longer text) lorem ipsum (imagine longer text) lorem ipsum (imagine longer text)
-                            lorem ipsum (imagine longer text)lorem ipsum (imagine longer text)
-                          </p>
-                        </div>
-                        <div class="carousel-item text-center p-4">
-                          <p>lorem ipsum (imagine longer text) lorem ipsum (imagine longer text) lorem ipsum (imagine longer text)
-                            lorem ipsum (imagine longer text)lorem ipsum (imagine longer text)
-                          </p>
-                        </div>
-                    </div>
-                </div>
-                <br><br>
-                <div align='center'>
-                  <a class="btn btn-dark" href="https://github.com/studentchetan/moodofthenation" role="button" style="text-transform:none;width:40%">
-                    GITHUB
-                  </a>
-                  <a class="btn btn-primary" href="#" role="button" style="text-transform:none;width:40%">
-                    DISCORD
-                  </a>
-                </div>
-            </div>
+          <a class="twitter-timeline" data-height="700" href="https://twitter.com/BBCBusiness?ref_src=twsrc%5Etfw">Tweets by BBCBusiness</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
     </div>
 </div>
 </body>
-<script src="/Users/chetu/Desktop/Projects/moodofthenation/static/charts.js" ></script>
-<!--
+<script src="{{url_for('static', filename='charts.js')}}"></script>
 {% if dark == True %}
     <script>
         document.body.style.background = '#00001a';
         document.body.style.color = 'white';
-        document.getElementById('live').style.background = '#00001a';
-        document.getElementById('live').style.color = 'white';
         document.getElementById('nav').className = 'navbar navbar-expand-sm bg-dark navbar-dark';
     </script>
 {% endif %}
--->
 </html>

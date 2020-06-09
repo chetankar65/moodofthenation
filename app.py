@@ -217,29 +217,38 @@ def update_account():
 @app.route('/timeline')
 def timeline():
     if current_user.is_authenticated:
-        return render_template('charts.html')
+        user = current_user.name
+        user_id = current_user.id
+        dark_db = db.execute('SELECT dark FROM users WHERE id = :id',{"id":user_id}).fetchall()[0][0]
+        if (dark_db == False):
+            dark = False
+        else:
+            dark = True
+        return render_template('charts.html', user = user, dark = dark)
 
 ### timeline data
 @app.route('/timeline_data')
 def timeline_data():
     if current_user.is_authenticated:
+        timeline = []
         day1 = date.today()
         day2 = day1 - timedelta(days = 1)
         day3 = day1 - timedelta(days = 2)
         day4 = day1 - timedelta(days = 3)
         day5 = day1 - timedelta(days = 4)
         #### days array
-        days = [day5, day4, day3, day2, day1]
-        day1_mood = Data.getDays(day1)
-        day2_mood = Data.getDays(day2)
-        day3_mood = Data.getDays(day3)
-        day4_mood = Data.getDays(day4)
-        day5_mood = Data.getDays(day5)
+        days = [str(day5), str(day4), str(day3), str(day2), str(day1)]
+        day1_mood = round(Data.getDays(day1), 2)
+        day2_mood = round(Data.getDays(day2), 2)
+        day3_mood = round(Data.getDays(day3), 2)
+        day4_mood = round(Data.getDays(day4), 2)
+        day5_mood = round(Data.getDays(day5), 2)
         #### mood array
         mood_arr = [day5_mood, day4_mood, day3_mood, day2_mood, day1_mood]
-        return jsonify({'success':True, 'days':days, 'moods':mood_arr}) 
+        for i in Data.getTimeline():
+            timeline.append(i[0])
+        return jsonify({'success':True, 'days':days, 'moods':mood_arr, 'timeline':timeline}) 
     #### Mood array
-
 
 @app.errorhandler(404)
 def page_not_found(e):
