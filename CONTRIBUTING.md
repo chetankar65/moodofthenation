@@ -7,6 +7,7 @@ Contributions are handled in the form of Pull Requests. You fork this repository
 -----------------------
 
 - Make changes according to their specific labels (features, frontend, security etc).
+- Only work on issues marked 'available'
 - Use relevant labels.
 - Raise appropriate issues
 - /claim to claim an issue to work on. 
