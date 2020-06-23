@@ -18,12 +18,17 @@ class Data():
     def getDays(time):
         ### Get average of all moods for today, yesterday, day before yesterday, and a few days before that
         mood_avg = db.execute('SELECT avg(mood) FROM current WHERE hour = :hour',{"hour":time}).fetchall()[0][0]
+        ### check length and return 0 if length is zero
+        if mood_avg is None:
+            return 0
         return float(mood_avg)
     
     @staticmethod
     def getMonths(time):
         ### write a logic to get data for months
         mood_avg = db.execute('SELECT avg(mood) FROM current WHERE hour = :hour',{"hour":time}).fetchall()[0][0]
+        if mood_avg is None:
+            return 0
         return float(mood_avg)
     
     @staticmethod
